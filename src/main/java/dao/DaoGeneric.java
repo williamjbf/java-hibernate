@@ -16,4 +16,17 @@ public class DaoGeneric<E> {
         transaction.commit();
     }
 
+    public E find(E entity){
+        Object id = HibernateUtil.getPrimaryKey(entity);
+
+        E e = (E) entityManager.find(entity.getClass(),id);
+        return e;
+    }
+
+    public E find(Class entity, long id){
+
+        E e = (E) entityManager.find(entity,id);
+        return e;
+    }
+
 }
