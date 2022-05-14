@@ -6,7 +6,7 @@
 
     <persistence-unit name="java-hibernate">
 
-        <class>model.User</class>
+        <class>model.ModelUser</class>
 
         <properties>
             <!-- database connection data -->

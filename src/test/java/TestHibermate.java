@@ -1,56 +1,85 @@
 import dao.DaoGeneric;
-import hibernate.HibernateUtil;
-import model.User;
+import model.ModelUser;
 import org.junit.Test;
 
 public class TestHibermate {
 
     @Test
     public void testSaveUsingHibernate(){
-        DaoGeneric<User> daoGeneric = new DaoGeneric<>();
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
-        User user = new User();
-        user.setAge(20);
-        user.setEmail("teste@teste.com");
-        user.setFirstName("Teste");
-        user.setLastName("");
-        user.setPassword("teste");
-        user.setLogin("teste");
+        ModelUser modelUser = new ModelUser();
+        modelUser.setAge(20);
+        modelUser.setEmail("teste@teste.com");
+        modelUser.setFirstName("Teste");
+        modelUser.setLastName("");
+        modelUser.setPassword("teste");
+        modelUser.setLogin("teste");
 
-        daoGeneric.save(user);
+        daoGeneric.save(modelUser);
     }
 
     @Test
     public void testFind(){
-        DaoGeneric<User> daoGeneric = new DaoGeneric<>();
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
-        User user = new User();
-        user.setId(1L);
-        user = daoGeneric.find(user);
+        ModelUser modelUser = new ModelUser();
+        modelUser.setId(1L);
+        modelUser = daoGeneric.find(modelUser);
 
-        System.out.println(user);
+        System.out.println(modelUser);
     }
 
     @Test
-    public void testFind2(){
-        DaoGeneric<User> daoGeneric = new DaoGeneric<>();
+    public void testFindById(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
-        User user = daoGeneric.find(User.class,2L);
+        ModelUser modelUser = daoGeneric.findById(ModelUser.class,2L);
 
-        System.out.println(user);
+        System.out.println(modelUser);
     }
 
     @Test
     public void testUpdate(){
-        DaoGeneric<User> daoGeneric = new DaoGeneric<>();
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
-        User user = daoGeneric.find(User.class,1L);
+        ModelUser modelUser = daoGeneric.findById(ModelUser.class,1L);
 
-        user.setAge(40);
-        user.setFirstName("name updated");
-        user.setLastName("");
-        user = daoGeneric.updateMerge(user);
-        System.out.println(user);
+        modelUser.setAge(40);
+        modelUser.setFirstName("name updated");
+        modelUser.setLastName("");
+        modelUser = daoGeneric.updateMerge(modelUser);
+        System.out.println(modelUser);
+    }
+
+    @Test
+    public void testDelete(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
+
+        ModelUser modelUser = new ModelUser();
+        modelUser.setFirstName("test delete");
+        modelUser.setId(2L);
+
+        modelUser = daoGeneric.updateMerge(modelUser);
+        daoGeneric.delete(modelUser);
+
+        modelUser = daoGeneric.findById(ModelUser.class, 2L);
+        System.out.println(modelUser);
+    }
+
+    public void testDeleteById(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
+
+        ModelUser modelUser = new ModelUser();
+        modelUser.setFirstName("test delete by ID");
+        modelUser.setId(2L);
+
+        modelUser = daoGeneric.updateMerge(modelUser);
+        daoGeneric.deleteById(ModelUser.class, 2L);
+
+        modelUser = daoGeneric.findById(ModelUser.class, 2L);
+        System.out.println(modelUser);
+
     }
 
 
