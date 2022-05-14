@@ -40,5 +40,18 @@ public class TestHibermate {
         System.out.println(user);
     }
 
+    @Test
+    public void testUpdate(){
+        DaoGeneric<User> daoGeneric = new DaoGeneric<>();
+
+        User user = daoGeneric.find(User.class,1L);
+
+        user.setAge(40);
+        user.setFirstName("name updated");
+        user.setLastName("");
+        user = daoGeneric.updateMerge(user);
+        System.out.println(user);
+    }
+
 
 }
