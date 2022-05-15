@@ -1,9 +1,11 @@
 package model;
 
 import javax.persistence.*;
-
 @Entity
-@Table(name = "modeluser")
+@NamedQueries({
+    @NamedQuery(name = "ModelUser.findAll", query = "select u from ModelUser u"),
+    @NamedQuery(name = "ModelUser.findAllByFirstName", query = "select u from ModelUser u where u.firstName = :firstName")
+})
 public class ModelUser {
 
     @Id

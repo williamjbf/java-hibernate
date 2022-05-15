@@ -155,4 +155,28 @@ public class TestHibermate {
 
         System.out.println("avarage ages: " + avg);
     }
+    @Test
+    public void testNamedQueryFindAll(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        List<ModelUser> list = daoGeneric.getEntityManager().createNamedQuery("ModelUser.findAll").getResultList();
+
+        for(ModelUser user:list){
+            System.out.println(user);
+        }
+    }
+
+    @Test
+    public void testNamedQueryFindAllByFirstName(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        List<ModelUser> list = daoGeneric.getEntityManager()
+                .createNamedQuery("ModelUser.findAllByFirstName")
+                .setParameter("firstName","test where")
+                .getResultList();
+
+        for(ModelUser user:list){
+            System.out.println(user);
+        }
+    }
 }
