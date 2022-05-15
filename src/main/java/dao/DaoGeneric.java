@@ -72,4 +72,8 @@ public class DaoGeneric<E> {
         transaction.commit();
     }
 
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
 }

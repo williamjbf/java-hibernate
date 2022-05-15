@@ -89,10 +89,70 @@ public class TestHibermate {
     public void testFindAll(){
         DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
-        List<ModelUser> users = daoGeneric.listAll(ModelUser.class);
-        for (ModelUser user: users){
+        List<ModelUser> list = daoGeneric.listAll(ModelUser.class);
+        for (ModelUser user: list){
+            System.out.println(user);
+        }
+    }
+    @Test
+    public void testQueryListOrder(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        List<ModelUser> list = daoGeneric.getEntityManager()
+                .createQuery("from ModelUser order by id")
+                .getResultList();
+
+        for(ModelUser user:list){
             System.out.println(user);
         }
     }
 
+    @Test
+    public void testQueryListMaxResult(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        List<ModelUser> list = daoGeneric.getEntityManager()
+                .createQuery("from ModelUser order by id")
+                .setMaxResults(5)
+                .getResultList();
+
+        for(ModelUser user:list){
+            System.out.println(user);
+        }
+    }
+    @Test
+    public void testQueryListParameter(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        ModelUser newUser = new ModelUser();
+        newUser.setFirstName("test where");
+        daoGeneric.updateMerge(newUser);
+
+        List<ModelUser> list = daoGeneric.getEntityManager()
+                .createQuery(" from ModelUser where firstname = :name")
+                .setParameter("name", "test where")
+                .getResultList();
+
+        for(ModelUser user:list){
+            System.out.println(user);
+        }
+
+    }
+    @Test
+    public void testQuerySumAge(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        Long sum = (Long) daoGeneric.getEntityManager().createQuery("select sum(age) from ModelUser ").getSingleResult();
+
+        System.out.println("sum of ages :" + sum);
+    }
+
+    @Test
+    public void testQueryAvarageAge(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<ModelUser>();
+
+        Double avg = (Double) daoGeneric.getEntityManager().createQuery("select avg(age) from ModelUser ").getSingleResult();
+
+        System.out.println("avarage ages: " + avg);
+    }
 }
