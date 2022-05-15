@@ -2,6 +2,8 @@ import dao.DaoGeneric;
 import model.ModelUser;
 import org.junit.Test;
 
+import java.util.List;
+
 public class TestHibermate {
 
     @Test
@@ -67,6 +69,7 @@ public class TestHibermate {
         System.out.println(modelUser);
     }
 
+    @Test
     public void testDeleteById(){
         DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
 
@@ -82,5 +85,14 @@ public class TestHibermate {
 
     }
 
+    @Test
+    public void testFindAll(){
+        DaoGeneric<ModelUser> daoGeneric = new DaoGeneric<>();
+
+        List<ModelUser> users = daoGeneric.listAll(ModelUser.class);
+        for (ModelUser user: users){
+            System.out.println(user);
+        }
+    }
 
 }

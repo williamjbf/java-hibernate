@@ -4,6 +4,7 @@ import hibernate.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.List;
 
 public class DaoGeneric<E> {
 
@@ -22,6 +23,16 @@ public class DaoGeneric<E> {
         E savedEntity = entityManager.merge(entity);
         transaction.commit();
         return savedEntity;
+    }
+
+    public List<E> listAll(Class<E> entity){
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        List<E> entitys = entityManager.createQuery("from " + entity.getName()).getResultList();
+
+        transaction.commit();
+        return entitys;
     }
 
     public E find(E entity){
